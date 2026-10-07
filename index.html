@@ -6,8 +6,10 @@
   <meta name="description" content="探索 118 種元素、解析化學式、配平化學反應，觀察分子與固液氣的互動化學實驗室。">
   <title>ATOM LAB — 原子實驗室</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080f17'/%3E%3Cg fill='none' stroke='%2360f5d2' stroke-width='1.6'%3E%3Cellipse cx='16' cy='16' rx='13' ry='5' transform='rotate(60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='5' transform='rotate(-60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='5'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%2360f5d2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=20261007-search">
-  <script defer src="elements.js"></script><script defer src="chem-engine.js"></script><script defer src="chem-data.js"></script><script defer src="catalog.js"></script><script defer src="pubchem-client.js"></script><script defer src="rhea-client.js"></script><script defer src="renderer.js"></script><script defer src="app.js?v=20261007-search"></script><script defer src="online-ui.js?v=20261007-search"></script>
+  <link rel="stylesheet" href="styles.css?v=20261007-learn">
+  <link rel="stylesheet" href="learning.css?v=20261007-learn">
+  <link rel="stylesheet" href="reaction-story.css?v=20261007-learn">
+  <script defer src="elements.js"></script><script defer src="chem-engine.js"></script><script defer src="chem-data.js"></script><script defer src="everyday-chem.js?v=20261007-learn"></script><script defer src="catalog.js?v=20261007-learn"></script><script defer src="pubchem-client.js"></script><script defer src="rhea-client.js"></script><script defer src="renderer.js"></script><script defer src="learning.js?v=20261007-learn"></script><script defer src="reaction-story.js?v=20261007-learn"></script><script defer src="app.js?v=20261007-learn"></script><script defer src="online-ui.js?v=20261007-search"></script>
 </head>
 <body>
 <svg class="icon-defs" aria-hidden="true"><defs>
@@ -27,6 +29,7 @@
 </header>
 <main>
   <section class="intro"><div><p class="eyebrow">EXPLORE. COMBINE. DISCOVER.</p><h1>從一顆原子，開始探索<span>。</span></h1></div><div class="intro-meta"><span>118 <small>種元素</small></span><i></i><span>∞ <small>種探索</small></span><span class="educational">教育模擬</span></div></section>
+  <section id="learning-lab" aria-label="入門闖關教學"></section>
   <div class="workspace">
     <aside class="panel elements-panel">
       <div class="panel-heading"><h2><span class="section-num">01</span> 元素庫</h2><button class="text-button" id="periodic-open">週期表 <span>▦</span></button></div>
@@ -59,6 +62,7 @@
       <div class="result-footnote"><svg><use href="#i-info"/></svg><p>示意模型，不是實際反應預測。<br>未收錄資料不代表安全或不會反應。</p></div>
     </aside>
   </div>
+  <section id="reaction-story" aria-label="反應前後的原子重組" hidden></section>
   <section class="library" aria-labelledby="library-title"><div class="library-heading"><div><span class="eyebrow">CHEMISTRY LIBRARY</span><h2 id="library-title">物質與反應，從這裡探索</h2><p id="library-summary" class="library-summary"></p></div><div class="library-tabs" role="group" aria-label="範例類型"><button class="active" data-library="compounds" aria-pressed="true">物質探索</button><button data-library="reactions" aria-pressed="false">化學反應</button><button data-library="online" aria-pressed="false">線上資料庫</button></div></div><div class="catalog-toolbar"><label class="catalog-search"><svg><use href="#i-search"/></svg><input type="search" id="library-search" aria-label="搜尋物質與反應" placeholder="搜尋名稱、化學式或反應，例如 硫酸、C2H5OH、中和"></label><label class="catalog-select">分類<select id="library-category" aria-label="物質與反應分類"><option value="all">全部分類</option></select></label><label class="catalog-select" id="library-state-label">物態<select id="library-state" aria-label="物質物態"><option value="all">全部物態</option><option value="solid">固體</option><option value="liquid">液體</option><option value="gas">氣體</option><option value="unknown">未確定</option></select></label></div><div class="catalog-status" id="catalog-status" aria-live="polite"></div><div id="experiment-cards" class="experiment-cards"></div><div class="catalog-pagination"><button id="catalog-prev" class="quiet">上一頁</button><span id="catalog-page"></span><button id="catalog-next" class="quiet">下一頁</button></div></section>
   <footer><span><b>ATOM LAB</b> · 每一次組合，都是一個新問題。</span><button id="sources-open" class="text-button">資料來源與模型範圍</button><span>25 °C · 1 atm <small>參考物態</small></span></footer>
 </main>

@@ -19,7 +19,7 @@
   function speciesKey(formula){if(speciesCache.has(formula))return speciesCache.get(formula);const parsed=engine.parseFormula(formula),match=identify(formula),key=match?'id:'+match.id:'formula:'+parsed.normalized;speciesCache.set(formula,key);return key}
   function sideKey(side){return [...new Set((Array.isArray(side)?side.map(item=>typeof item==='string'?item:item.formula):Object.keys(side)).map(speciesKey))].sort().join('||')}
   for(const r of reactions){if(r.autoMatch===false)continue;const left=sideKey(r.inputs);if(!reactionIndex.has(left))reactionIndex.set(left,[]);reactionIndex.get(left).push({record:r,right:sideKey(r.outputs)})}
-  for(const c of [...compounds,...reactions])searchIndex.set(c,normalize([c.name,c.english,c.formula,c.equation,c.namedEquation,c.short,labels[c.category],...(c.aliases||[])].filter(Boolean).join(' ')));
+  for(const c of [...compounds,...reactions])searchIndex.set(c,normalize([c.name,c.english,c.formula,c.equation,c.namedEquation,c.short,labels[c.category],...(c.aliases||[]),...(c.searchTerms||[])].filter(Boolean).join(' ')));
   function findReactions(reactants,products){const left=sideKey(reactants),right=products?sideKey(products):null;return (reactionIndex.get(left)||[]).filter(item=>!right||item.right===right).map(item=>item.record)}
   function query({kind='compounds',query='',category='all',state='all',provenance='all',page=1,pageSize=12}={}){const source=kind==='reactions'?reactions:compounds;const terms=String(query).split(/\s+/).map(normalize).filter(Boolean);const filtered=source.filter(c=>{
    if(category!=='all'&&c.category!==category)return false;

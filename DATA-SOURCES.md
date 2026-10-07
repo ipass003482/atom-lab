@@ -53,3 +53,24 @@ Rhea 資料依 [Creative Commons Attribution 4.0 International（CC BY 4.0）](h
 - [NOAA CAMEO 氫氣](https://cameochemicals.noaa.gov/chemical/8729)、[甲烷](https://cameochemicals.noaa.gov/chemical/8823)、[ILO／WHO 鈉安全卡](https://inchem.org/documents/icsc/icsc/eics0717.htm) 與 [英國皇家化學學會鎂](https://periodic-table.rsc.org/element/12/magnesium)：部分物性及危害概念參考。
 
 中文教學敘述是本網站整理的摘要，不是完整安全資料表。原子質量保留來源精度；參考物態需注意溫度、壓力、純度與物質形態。配平及守恆檢查不能證明反應可行性、危害程度或動畫的微觀準確性。
+
+## 生活化搜尋與新增教學
+
+`everyday-chem.js` 整理 **22 組生活名稱情境、8 個快捷搜尋詞**，每組保留 `sources` 連結。只增補搜尋詞及中文成分提醒，不增加物質筆數，也不改寫既有物態、危害或化學身分；混合物查詢列出的成分不是完整配方或濃度。
+
+| 快捷情境 | 參考來源 |
+|---|---|
+| 食鹽 | [PubChem 氯化鈉](https://pubchem.ncbi.nlm.nih.gov/compound/5234) |
+| 小蘇打 | [PubChem 碳酸氫鈉](https://pubchem.ncbi.nlm.nih.gov/compound/516892) |
+| 白醋 | [PubChem 乙酸](https://pubchem.ncbi.nlm.nih.gov/compound/176)；頁面提醒醋是水溶液 |
+| 酒精 | [PubChem 乙醇](https://pubchem.ncbi.nlm.nih.gov/compound/702)、[CDC 化學消毒劑說明](https://www.cdc.gov/infection-control/hcp/disinfection-sterilization/chemical-disinfectants.html)；區分乙醇、異丙醇與產品配方 |
+| 砂糖 | [PubChem 蔗糖](https://pubchem.ncbi.nlm.nih.gov/compound/5988) |
+| 乾冰 | [PubChem 二氧化碳](https://pubchem.ncbi.nlm.nih.gov/compound/280)；區分乾冰與常溫氣態的條件 |
+| 蛋殼 | [PubChem 碳酸鈣](https://pubchem.ncbi.nlm.nih.gov/compound/10112)、[蛋殼相關研究（PubMed）](https://pubmed.ncbi.nlm.nih.gov/8894229/) |
+| 雙氧水 | [PubChem 過氧化氫](https://pubchem.ncbi.nlm.nih.gov/compound/784)；區分水溶液與純物質 |
+
+其他情境引用同一模組內的 PubChem 逐筆記錄，包括氫氧化鈉、生石灰、熟石灰、氨、二氧化矽、檸檬酸、甘油、抗壞血酸、咖啡因、七水合硫酸鎂及碳酸鈉；鐵鏽說明引用上列 OpenStax 腐蝕章節。網站生活敘述是摘要，不提供產品配方或消毒操作建議。
+
+`learning.js` 的 **10 個入門任務**由本網站依已收錄教學資料編寫，練習化學式、結晶水、離子、異構物、參考物態、配平與守恆；答案與完成進度在瀏覽器本機處理。
+
+`reaction-story.js` 的時間軸由配平結果產生符號原子對應，以同元素逐顆配對並保留各階段識別與數量。這是守恆示意，不是來源資料中的實測原子追蹤、反應機構或結構座標。中性反應每側不超過 120 顆原子、前後合計不超過 24 個化學式單位時才播放；離子、電子及超限反應改顯示完整元素與總電荷核對表，沒有抽樣省略原子數。
