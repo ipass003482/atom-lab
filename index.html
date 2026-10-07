@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080f17">
+  <meta name="description" content="探索 118 種元素、解析化學式、配平化學反應，觀察分子與固液氣的互動化學實驗室。">
+  <title>ATOM LAB — 原子實驗室</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080f17'/%3E%3Cg fill='none' stroke='%2360f5d2' stroke-width='1.6'%3E%3Cellipse cx='16' cy='16' rx='13' ry='5' transform='rotate(60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='5' transform='rotate(-60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='5'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%2360f5d2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="elements.js"></script><script defer src="chem-engine.js"></script><script defer src="chem-data.js"></script><script defer src="catalog.js"></script><script defer src="pubchem-client.js"></script><script defer src="rhea-client.js"></script><script defer src="renderer.js"></script><script defer src="app.js"></script><script defer src="online-ui.js"></script>
+</head>
+<body>
+<svg class="icon-defs" aria-hidden="true"><defs>
+<symbol id="i-atom" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="1.5"/></symbol>
+<symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="m8 4 12 8-12 8z"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8L21 9h-8z"/></symbol>
+<symbol id="i-cube" viewBox="0 0 24 24"><path d="m12 2 10 5v10l-10 5-10-5V7zM2 7l10 5 10-5M12 12v10M7 4.5l10 5"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+</defs></svg>
+<header class="topbar">
+  <a class="brand" href="./" aria-label="ATOM LAB 首頁"><span class="brand-symbol"><svg><use href="#i-atom"/></svg></span><span>ATOM<span class="brand-thin"> LAB</span><small>原子實驗室</small></span></a>
+  <div class="header-middle"><span class="live-dot"></span> INTERACTIVE CHEMISTRY LAB <span class="version">/ 01</span></div>
+  <button class="quiet" id="help-open"><svg><use href="#i-info"/></svg> 使用指南</button>
+</header>
+<main>
+  <section class="intro"><div><p class="eyebrow">EXPLORE. COMBINE. DISCOVER.</p><h1>從一顆原子，開始探索<span>。</span></h1></div><div class="intro-meta"><span>118 <small>種元素</small></span><i></i><span>∞ <small>種探索</small></span><span class="educational">教育模擬</span></div></section>
+  <div class="workspace">
+    <aside class="panel elements-panel">
+      <div class="panel-heading"><h2><span class="section-num">01</span> 元素庫</h2><button class="text-button" id="periodic-open">週期表 <span>▦</span></button></div>
+      <label class="searchbox"><svg><use href="#i-search"/></svg><input id="element-search" type="search" placeholder="搜尋名稱、符號或原子序" autocomplete="off" aria-label="搜尋元素"></label>
+      <div class="element-filters" role="group" aria-label="元素分類"><button class="active" data-filter="all" aria-pressed="true">全部</button><button data-filter="nonmetal" aria-pressed="false">非金屬</button><button data-filter="metal" aria-pressed="false">金屬</button></div>
+      <div class="element-grid" id="element-grid" aria-label="點選元素以加入原子"></div>
+      <div class="element-total"><span id="element-count">118 ELEMENTS</span><span>點選加入 ＋</span></div>
+      <div class="element-detail" id="element-detail"></div>
+      <p class="panel-note">選擇元素，自由組合。<br>原子比例相同，也可能有不同結構。</p>
+    </aside>
+    <section class="panel lab-panel" aria-label="互動實驗台">
+      <div class="lab-tabs" role="tablist" aria-label="實驗模式"><button id="tab-atoms" role="tab" aria-selected="true" aria-controls="lab-content" data-mode="atoms" class="active">原子組合</button><button id="tab-formula" role="tab" aria-selected="false" aria-controls="lab-content" data-mode="formula" tabindex="-1">化學式探索</button><button id="tab-equation" role="tab" aria-selected="false" aria-controls="lab-content" data-mode="equation" tabindex="-1">反應配平</button></div>
+      <div id="lab-content" role="tabpanel" aria-labelledby="tab-atoms">
+      <form id="formula-form" class="input-form" hidden><label for="formula-input">輸入化學式 <small>支援括號、結晶水與下標</small></label><div class="input-row"><input id="formula-input" placeholder="例如 Ca(OH)2 或 CuSO4·5H2O" maxlength="500" autocomplete="off" spellcheck="false"><button class="accent-button" type="submit">解析</button></div></form>
+      <form id="equation-form" class="input-form" hidden><label for="equation-input">輸入反應物或完整反應式 <small>只輸入反應物可查詢已收錄反應</small></label><div class="input-row"><input id="equation-input" placeholder="H2 + O2，或 Fe + O2 = Fe2O3" maxlength="1000" autocomplete="off" spellcheck="false"><button class="accent-button" type="submit">探索／配平</button></div></form>
+      <div class="viewport" id="viewport">
+        <canvas id="molecule-canvas" aria-label="可拖曳旋轉的分子結構示意" tabindex="0"></canvas>
+        <div class="viewport-top"><span class="viewport-label"><span class="live-dot"></span> <span id="scene-label">MOLECULAR VIEW</span></span><div class="viewport-actions"><button id="pause-btn" class="icon-button" title="暫停旋轉" aria-label="暫停旋轉" aria-pressed="false">Ⅱ</button><button id="reset-view" class="icon-button" title="重設視角" aria-label="重設視角"><svg><use href="#i-reset"/></svg></button></div></div>
+        <div class="scene-caption"><span id="scene-formula">H₂O</span><small id="scene-name">水 / WATER</small></div>
+        <div class="axis" aria-hidden="true"><span>Y</span><span>Z</span><span>X</span></div>
+        <div class="viewport-bottom"><span>拖曳旋轉 · 滾輪縮放</span><div class="view-switch" role="group" aria-label="模型視圖"><button class="active" data-view="molecule" aria-pressed="true">結構</button><button data-view="matter" aria-pressed="false">物態</button></div></div>
+        <div id="effect-banner" class="effect-banner" hidden></div>
+      </div>
+      <div class="mixing-tray"><div class="tray-heading"><span id="tray-title">實驗台上的原子</span><button class="text-button muted" id="clear-btn">清空實驗台</button></div><div id="atom-chips" class="atom-chips"></div><div class="tray-bottom"><span id="atom-summary">3 顆原子 · 2 種元素</span><button id="combine-btn" class="accent-button"><svg><use href="#i-spark"/></svg> 組合原子</button></div></div>
+      </div>
+    </section>
+    <aside class="panel results-panel" aria-label="探索結果">
+      <div class="panel-heading"><h2><span class="section-num">02</span> 探索結果</h2><span class="tiny-cross">＋</span></div>
+      <div id="result-content" aria-live="polite" aria-atomic="true"></div>
+      <div class="result-footnote"><svg><use href="#i-info"/></svg><p>示意模型，不是實際反應預測。<br>未收錄資料不代表安全或不會反應。</p></div>
+    </aside>
+  </div>
+  <section class="library" aria-labelledby="library-title"><div class="library-heading"><div><span class="eyebrow">CHEMISTRY LIBRARY</span><h2 id="library-title">物質與反應，從這裡探索</h2><p id="library-summary" class="library-summary"></p></div><div class="library-tabs" role="group" aria-label="範例類型"><button class="active" data-library="compounds" aria-pressed="true">物質探索</button><button data-library="reactions" aria-pressed="false">化學反應</button><button data-library="online" aria-pressed="false">線上資料庫</button></div></div><div class="catalog-toolbar"><label class="catalog-search"><svg><use href="#i-search"/></svg><input type="search" id="library-search" aria-label="搜尋物質與反應" placeholder="搜尋名稱、化學式或反應，例如 硫酸、C2H5OH、中和"></label><label class="catalog-select">分類<select id="library-category" aria-label="物質與反應分類"><option value="all">全部分類</option></select></label><label class="catalog-select" id="library-state-label">物態<select id="library-state" aria-label="物質物態"><option value="all">全部物態</option><option value="solid">固體</option><option value="liquid">液體</option><option value="gas">氣體</option><option value="unknown">未確定</option></select></label></div><div class="catalog-status" id="catalog-status" aria-live="polite"></div><div id="experiment-cards" class="experiment-cards"></div><div class="catalog-pagination"><button id="catalog-prev" class="quiet">上一頁</button><span id="catalog-page"></span><button id="catalog-next" class="quiet">下一頁</button></div></section>
+  <footer><span><b>ATOM LAB</b> · 每一次組合，都是一個新問題。</span><button id="sources-open" class="text-button">資料來源與模型範圍</button><span>25 °C · 1 atm <small>參考物態</small></span></footer>
+</main>
+<dialog id="periodic-dialog" class="wide-dialog"><div class="dialog-header"><div><p class="eyebrow">THE PERIODIC TABLE</p><h2>118 種元素，完整探索</h2></div><button class="icon-button" data-close="periodic-dialog" aria-label="關閉週期表"><svg><use href="#i-close"/></svg></button></div><p>點選任一元素加入實驗台；手機可左右滑動週期表。</p><div class="periodic-scroll"><div id="periodic-table" class="periodic-table"></div></div><div class="periodic-legend"><span>非金屬</span><span>金屬</span><span>類金屬</span><span>惰性氣體</span><span>鑭系 / 錒系</span></div></dialog>
+<dialog id="help-dialog"><div class="dialog-header"><h2>你的第一個原子實驗</h2><button class="icon-button" data-close="help-dialog" aria-label="關閉使用指南"><svg><use href="#i-close"/></svg></button></div><ol class="guide-list"><li><b>選原子，做組合</b><p>點選左側元素加入原子。按原子旁的 − 可移除，再按「組合原子」查看組成。</p></li><li><b>直接探索化學式</b><p>切換「化學式探索」，輸入 C6H12O6、Ca(OH)2、CuSO4·5H2O 等化學式。大型化學式會顯示部分粒子。離子可用 Fe^3+、SO4^2-；不支援同位素或 (aq) 等物態後綴。</p></li><li><b>看看物質之間的反應</b><p>切換「反應配平」，輸入 H2 + O2 等反應物以查詢已收錄範例；也可以輸入 Fe + O2 = Fe2O3 等完整反應式來配平。原有係數會重新計算。配平只檢查守恆，不證明反應會發生。</p></li><li><b>看看不同的物態</b><p>切換「結構／物態」；拖曳模型旋轉，滾輪縮放，也可用方向鍵旋轉、+ / − 縮放。</p></li></ol><p class="notice">H 表示氫原子，H₂ 才是氫氣分子。所有特效僅供學習；危險反應不應在現實中嘗試。</p></dialog>
+<dialog id="sources-dialog"><div class="dialog-header"><h2>資料來源與模型範圍</h2><button class="icon-button" data-close="sources-dialog" aria-label="關閉資料來源"><svg><use href="#i-close"/></svg></button></div><div id="sources-content"></div></dialog>
+<div id="toast" class="toast" role="status" hidden></div>
+</body></html>
